@@ -1,5 +1,6 @@
 import Container from "./Container";
 import Logo from "./Logo";
+import Categories from "./navbar/Categories";
 import Search from "./Search";
 import UserMenu from "./UserMenu";
 
@@ -28,6 +29,8 @@ export const Header = () => {
 
         </Container>
       </div>
+      {/* Categories */}
+      <Categories />
     </div>
-  </div>;
+  </div>
 };

@@ -3,6 +3,12 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import Modal from '@/components/Modals/Modal';
+import RegisterModal from '@/components/Modals/RegisterModal';
+
+import ClienComp from '@/components/ClienComp';
+import RentModal from '@/components/Modals/RentModal';
+
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,9 +25,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header />
-        {children}
-        <Footer />
+        <ClienComp>
+          <Header />
+          <RegisterModal />
+          <RentModal />
+          <div className='pb-20 pt-20'>
+
+            {children}
+          </div>
+
+          <Footer />
+        </ClienComp>
       </body>
     </html>
   );

@@ -2,6 +2,7 @@
 import React from 'react'
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const Logo = () => {
     // const router = useRouter();
@@ -15,9 +16,13 @@ const Logo = () => {
         //     src=""
         // />  download logo 
 
-        <div className='hidden md:block cursor-pointer'>
+        <Link
+            className='hidden md:block cursor-pointer'
+            // onClick={() => router.push('/')}
+            href={'/'}
+        >
             Logo
-        </div>
+        </Link>
     )
 }
 

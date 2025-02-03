@@ -3,19 +3,38 @@ import React, { useCallback, useState } from 'react';
 import { AiOutlineMenu } from "react-icons/ai"
 import Avatar from './Avatar';
 import MenuItem from './MenuItem';
+import RegisterModal from '@/components/Modals/RegisterModal';
+import useRegisterModal from '@/app/hooks/useRegister';
+
+import useRentModal from '@/app/hooks/useRent';
+
+// interface UserMenuProps {
+//     currentUser?: safeUser | null
+// }
 
 const UserMenu = () => {
+    const RegisterModal = useRegisterModal();
     const [isOpen, setIsOpen] = useState(false);
+    const rentModal = useRentModal()
 
     const toggleOpen = useCallback(() => {
         setIsOpen((value) => !value)
     }, [])
 
+    const onRent = useCallback(() => {
+        // if(!currentuser){
+
+        // }
+        rentModal.onOpen();
+    }, [rentModal]);
+    console.log(onRent)
+
     return (
         <div className='relative'>
             <div className='flex flex-row items-center gap-3'>
+
                 <div
-                    onClick={() => { }}
+                    onClick={onRent}
                     className='
                 hidden
                 md:block
@@ -24,12 +43,12 @@ const UserMenu = () => {
                 py-3
                 px-4
                 rounded-full
-                hover:bg-neutral-100
+                hover:bg-neutral-100t
                 transition
                 cursor-pointer
                 '
                 >
-                    Your Home
+                    Jadi Tenant
                 </div>
 
                 <div
@@ -79,7 +98,7 @@ const UserMenu = () => {
                                 label='Login'
                             />
                             <MenuItem
-                                onClick={() => { }}
+                                onClick={RegisterModal.onOpen}
                                 label='Sign Up'
                             />
                         </>
