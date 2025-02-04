@@ -7,12 +7,14 @@ import RegisterModal from '@/components/Modals/RegisterModal';
 import useRegisterModal from '@/app/hooks/useRegister';
 
 import useRentModal from '@/app/hooks/useRent';
+import { useRouter } from 'next/navigation';
 
 // interface UserMenuProps {
 //     currentUser?: safeUser | null
 // }
 
 const UserMenu = () => {
+    const router = useRouter();
     const RegisterModal = useRegisterModal();
     const [isOpen, setIsOpen] = useState(false);
     const rentModal = useRentModal()

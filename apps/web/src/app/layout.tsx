@@ -30,10 +30,8 @@ export default function RootLayout({
           <RegisterModal />
           <RentModal />
           <div className='pb-20 pt-20'>
-
             {children}
           </div>
-
           <Footer />
         </ClienComp>
       </body>
