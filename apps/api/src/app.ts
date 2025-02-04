@@ -68,19 +68,10 @@
 // }
 
 import express, { Request, Response, Application } from 'express';
-
-
 import authRoutes from './routers/auth.routes';
-// import dashboardRoutes from './routers/dashboardRoutes';
-// import pointRoutes from './routers/pointRoutes';
-// import updateRole from './routers/updateRoleRoutes';
-// import orderRoutes from './routers/ordersRoute';
-
 import ErrorMiddleware from "./middlewares/error.middleware";
 import { PORT as port, BASE_WEB_URL } from "./config";
 import cors from "cors";
-
-
 
 const PORT = Number(port) || 8000;
 
@@ -97,11 +88,7 @@ app.use(
 // app.use(cors());
 app.use(express.json());
 
-app.use('/auth', authRoutes);  //Login , Register, Reff
-// app.use('/api/dashboard', dashboardRoutes);
-// app.use('/point', pointRoutes);
-// app.use("/role", updateRole);
-// app.use("/orders", orderRoutes);       
+app.use('/auth', authRoutes);  
 
 app.use(ErrorMiddleware);
 

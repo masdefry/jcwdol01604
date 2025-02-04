@@ -1,13 +1,14 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { Header } from '@/components/Header';
+
 import { Footer } from '@/components/Footer';
 import Modal from '@/components/Modals/Modal';
 import RegisterModal from '@/components/Modals/RegisterModal';
 
-import ClienComp from '@/components/ClienComp';
 import RentModal from '@/components/Modals/RentModal';
+import { Navbar } from '@/components/Navbar/Navbar';
+import ClientCompopnent from '@/layouts/ClientComponent';
 
 
 const inter = Inter({ subsets: ['latin'] });
@@ -25,15 +26,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ClienComp>
-          <Header />
+        <ClientCompopnent>
+          <Navbar />
           <RegisterModal />
           <RentModal />
           <div className='pb-20 pt-20'>
             {children}
           </div>
           <Footer />
-        </ClienComp>
+        </ClientCompopnent>
       </body>
     </html>
   );

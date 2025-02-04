@@ -2,8 +2,8 @@
 import React, { useMemo, useState } from 'react'
 import Modal from './Modal';
 import useRentModal from '@/app/hooks/useRent';
-import Heading from '@/utils/Heading';
-import { categories } from '@/components/CategoryBox/Categories';
+import Heading from '../utility/Heading';
+import { categories } from '../navbar/Categories';
 import CategoryInput from '../utility/CategoryInput';
 import { FieldValues, useForm } from 'react-hook-form';
 

@@ -2,7 +2,7 @@
 import ClientCompopnent from '@/layouts/ClientComponent';
 import React from 'react'
 import RegisterForm from './Components/RegisForm';
-import Container from '@/components/Container';
+import Container from '@/layouts/Container';
 
 
 export default function RegisView() {
@@ -11,7 +11,6 @@ export default function RegisView() {
             <Container>
                 <RegisterForm />
             </Container>
-
         </ClientCompopnent>
     )
 }

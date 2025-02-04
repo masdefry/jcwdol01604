@@ -1,6 +1,6 @@
 "use client";
 import React from 'react'
-import Container from '../Container'
+import Container from '@/layouts/Container'
 
 import { TbBeach, TbMountain, TbPool } from 'react-icons/tb';
 import { GiWindmill, GiIsland, GiBoatFishing, GiCastle, GiForestCamp, GiCaveEntrance } from 'react-icons/gi';

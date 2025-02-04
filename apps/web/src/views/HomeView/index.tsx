@@ -1,9 +1,7 @@
 "use client";
-import ClienComp from '@/components/ClienComp'
-import Container from '@/components/Container'
-import Empty from '@/components/utility/Empty';
 import ClientCompopnent from '@/layouts/ClientComponent';
-import { property } from 'cypress/types/lodash';
+import Container from '@/layouts/Container';
+import Empty from '@/utils/EmptyHandler';
 
 export default function HomeViews() {
     //emptyhandler
