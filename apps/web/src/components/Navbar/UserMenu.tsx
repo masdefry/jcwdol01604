@@ -103,6 +103,7 @@ const UserMenu = () => {
                                 onClick={RegisterModal.onOpen}
                                 label='Sign Up'
                             />
+
                         </>
                     </div>
 

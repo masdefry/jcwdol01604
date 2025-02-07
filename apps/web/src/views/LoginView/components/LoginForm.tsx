@@ -11,6 +11,7 @@ import { deleteCookie, getCookie, setCookie } from "cookies-next";
 import useAuthStore, { IUser } from "@/stores/AuthStores";
 
 import Image from 'next/image';
+import Link from "next/link";
 
 const HandleLogin = async (onAuthSuccess: (user: IUser | null) => void) => {
     try {
@@ -106,9 +107,16 @@ export default function LoginForm() {
                                     {touched.password && errors.password && (
                                         <div className="text-red-500 text-sm mt-1">{errors.password}</div>
                                     )}
+
+                                    {/* Link Forgot Password */}
+                                    <div className="text-right mt-2">
+                                        <Link href="/forgot-password" className="text-sm text-blue-600 hover:underline">
+                                            Forgot Password?
+                                        </Link>
+                                    </div>
                                 </div>
                                 <button
-                                    className="mt-4 w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 rounded-lg transition duration-300"
+                                    className="mt-4 w-full bg-zinc-600 hover:bg-orange-700 text-white font-bold py-2 rounded-lg transition duration-300"
                                     type="submit"
                                 >
                                     Log in
@@ -166,16 +174,16 @@ export default function LoginForm() {
 
             <div className="hidden md:block md:w-1/2 relative">
                 <Image
-                    src="/office.jpg" // Ganti dengan path gambar Anda
+                    src="/office.jpg" 
                     alt="Event background"
                     layout="fill"
                     objectFit="cover"
                     className="rounded-lg"
                 />
                 <div className="absolute bottom-4 left-4 text-white text-xs bg-black bg-opacity-50 p-2 rounded">
-                    <p>Winston Baker</p>
-                    <p>Confluence Summit</p>
-                    <p>San Francisco, CA</p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
                 </div>
             </div>
 
