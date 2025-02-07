@@ -10,12 +10,155 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Sample {
-  id        Int      @id @default(autoincrement())
-  name      String
-  code      String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+// model Sample {
+//   id        Int      @id @default(autoincrement())
+//   name      String
+//   code      String   @unique
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
 
-  @@map("samples") // if you want to use snake_case format
+//   @@map("samples") // if you want to use snake_case format
+// }
+
+// Enum Role
+enum Role {
+  USER
+  TENANT
+}
+
+// Model User
+model User {
+  id             Int       @id @default(autoincrement())
+  role           Role      @default(USER)
+  name           String
+  email          String    @unique
+  password       String
+  emailVerified  Boolean   @default(false)
+  emailVerificationToken String?  // Token verifikasi email
+  resetPasswordToken   String?   // Token reset password
+  resetPasswordExpires DateTime? // Expiry token reset password
+  profilePicture String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  properties     Property[]
+  bookings       Booking[]
+  reviews        Review[]
+}
+
+// Model Property
+model Property {
+  id          Int       @id @default(autoincrement())
+  tenantId    Int
+  name        String
+  categoryId  Int
+  description String?
+  location    String?
+  basePrice   Float
+  isDeleted   Boolean   @default(false)
+  deletedAt   DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  tenant      User              @relation(fields: [tenantId], references: [id])
+  category    PropertyCategory  @relation(fields: [categoryId], references: [id])
+  rooms       Room[]
+  reviews     Review[]
+}
+
+// Model PropertyCategory
+model PropertyCategory {
+  id         Int       @id @default(autoincrement())
+  name       String    @unique
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  properties Property[]
+}
+
+// Model Room
+model Room {
+  id          Int       @id @default(autoincrement())
+  propertyId  Int
+  name        String
+  description String?
+  price       Float
+  maxGuests   Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  property    Property  @relation(fields: [propertyId], references: [id])
+  bookings    Booking[]
+  availability RoomAvailability[]
+  peakSeasonRates PeakSeasonRate[]
+}
+
+// Model RoomAvailability
+model RoomAvailability {
+  id          Int       @id @default(autoincrement())
+  roomId      Int
+  date        DateTime       // Menggunakan Date untuk ketersediaan harian
+  isAvailable Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  room        Room       @relation(fields: [roomId], references: [id])
+}
+
+// Model PeakSeasonRate
+model PeakSeasonRate {
+  id                 Int       @id @default(autoincrement())
+  roomId             Int
+  startDate          DateTime
+  endDate            DateTime
+  priceAdjustment    Float?
+  percentageAdjustment Float?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  room               Room      @relation(fields: [roomId], references: [id])
+}
+
+// Model Booking
+enum BookingStatus {
+  WAITING_PAYMENT
+  PAYMENT_CONFIRMED
+  CANCELLED
+}
+model PaymentProof {
+  id         Int       @id @default(autoincrement())
+  bookingId  Int       @unique // Setiap `PaymentProof` hanya bisa terhubung ke satu `Booking`
+  proofUrl   String
+  uploadedAt DateTime  @default(now())
+
+  booking    Booking   @relation(fields: [bookingId], references: [id])
+}
+model Booking {
+  id            Int            @id @default(autoincrement())
+  userId        Int
+  roomId        Int
+  startDate     DateTime
+  endDate       DateTime
+  status        BookingStatus  @default(WAITING_PAYMENT)
+  totalPrice    Float
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  room          Room           @relation(fields: [roomId], references: [id])
+  user          User           @relation(fields: [userId], references: [id])
+  paymentProof  PaymentProof?  
+}
+
+// Model Review
+model Review {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  propertyId  Int
+  rating      Int
+  comment     String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  user        User      @relation(fields: [userId], references: [id])
+  property    Property  @relation(fields: [propertyId], references: [id])
 }
