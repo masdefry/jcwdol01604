@@ -1,8 +1,11 @@
 "use client";
+import useAuthStore from '@/stores/AuthStores';
 import Image from 'next/image';
 import React from 'react'
 
 const Avatar = () => {
+    const { user, clearAuth } = useAuthStore(); //zustand
+    
     return (
         <div>
             {/* <Image
@@ -12,7 +15,7 @@ const Avatar = () => {
             alt='Avatar'
             src="/image/"
             /> */}
-            A
+            <span className="hidden md:inline-block font-medium">{user?.name || "Guest"}</span>
         </div>
     )
 }

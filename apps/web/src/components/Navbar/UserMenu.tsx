@@ -95,14 +95,12 @@ const UserMenu = () => {
                 >
                     <div className='flex flex-col cursor-pointer'>
                         <>
-                            <MenuItem
-                                onClick={() => { }}
-                                label='Login'
-                            />
-                            <MenuItem
+                            <MenuItem onClick={() => router.push("/login")} label="Login" />
+                            <MenuItem onClick={() => router.push("/register")} label="Sign Up" />
+                            {/* <MenuItem
                                 onClick={RegisterModal.onOpen}
                                 label='Sign Up'
-                            />
+                            /> */}
 
                         </>
                     </div>

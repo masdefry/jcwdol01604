@@ -4,8 +4,8 @@ import Container from '@/layouts/Container'
 
 export default function LoginView() {
     return (
-        <Container>
+        <div>
             <LoginForm />
-        </Container>
+        </div>
     )
 }

@@ -174,11 +174,13 @@ export default function LoginForm() {
 
             <div className="hidden md:block md:w-1/2 relative">
                 <Image
-                    src="/office.jpg" 
+                    src="/poster.avif" 
                     alt="Event background"
-                    layout="fill"
+                    layout="responsive" 
                     objectFit="cover"
                     className="rounded-lg"
+                    width={1500}
+                    height={1000} 
                 />
                 <div className="absolute bottom-4 left-4 text-white text-xs bg-black bg-opacity-50 p-2 rounded">
                     <p></p>

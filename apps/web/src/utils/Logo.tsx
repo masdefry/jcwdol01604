@@ -17,7 +17,7 @@ const Logo = () => {
         // />  download logo 
 
         <Link
-            className='hidden md:block cursor-pointer'
+            className="text-orange-600 font-bold text-2xl"
             // onClick={() => router.push('/')}
             href={'/'}
         >

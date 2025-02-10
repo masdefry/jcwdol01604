@@ -50,7 +50,7 @@ declare global {
 
 async function AdminGuard(req: Request, res: Response, next: NextFunction) {
     try {
-        if (req.user?.role !== "ORGANIZER") throw new Error("Not an ORGANIZER");
+        if (req.user?.role !== "TENANT") throw new Error("Not an TENANT");
 
         next();
     } catch (err) {

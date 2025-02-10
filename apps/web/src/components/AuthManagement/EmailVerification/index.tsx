@@ -12,7 +12,7 @@ const VerifyEmail = () => {
 
     useEffect(() => {
         if (token) {
-            axiosInstance.get(`/verify-email?token=${token}`)
+            axiosInstance.get(`/auth/verify-email?token=${token}`)
                 .then((res) => {
                     setMessage(res.data.message);
                     Swal.fire("Success!", "Email berhasil diverifikasi!", "success").then(
@@ -21,7 +21,8 @@ const VerifyEmail = () => {
                         }
                     );
                 })
-                .catch(() => {
+                .catch((err) => {
+                    console.log("Error response:", err.response?.data || err); // Debugging error
                     setMessage("Verifikasi gagal atau token tidak valid.");
                     Swal.fire("Error!", "Verifikasi gagal.", "error");
                 });

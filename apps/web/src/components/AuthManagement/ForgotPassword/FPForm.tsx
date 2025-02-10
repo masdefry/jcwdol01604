@@ -13,7 +13,7 @@ const ForgotPasswordForm = () => {
 
     const handleForgotPassword = async (values: { email: string }) => {
         try {
-            await axiosInstance.post("/forgot-password", values);
+            await axiosInstance.post("/auth/forgot-password", values);
             setEmail(values.email);
             Swal.fire("Success!", "Email reset telah dikirim!", "success");
         } catch {

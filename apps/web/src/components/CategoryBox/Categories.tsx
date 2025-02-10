@@ -4,7 +4,7 @@ import Container from '@/layouts/Container'
 
 import { TbBeach, TbMountain, TbPool } from 'react-icons/tb';
 import { GiWindmill, GiIsland, GiBoatFishing, GiCastle, GiForestCamp, GiCaveEntrance } from 'react-icons/gi';
-import { MdOutlineVilla } from 'react-icons/md';
+import { MdOutlineVilla, MdOutlineApartment } from 'react-icons/md';
 import { FaSkiing } from 'react-icons/fa';
 import { BsSnow } from 'react-icons/bs';
 
@@ -18,14 +18,14 @@ export const categories = [
         description: "This Beach"
     },
     {
-        label: 'Windmills',
-        icon: GiWindmill,
-        description: " This Windmill"
+        label: 'Villa',
+        icon: MdOutlineVilla,
+        description: " Villa"
     },
     {
-        label: 'Modern',
-        icon: MdOutlineVilla,
-        description: " This Windmill"
+        label: 'Apartment',
+        icon: MdOutlineApartment,
+        description: " Villa"
     },
     {
         label: 'CountrySide',

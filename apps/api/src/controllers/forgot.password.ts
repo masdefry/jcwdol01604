@@ -30,8 +30,8 @@ export const forgotPassword = async (req: Request, res: Response) => {
             },
         });
 
-        // Generate reset link
-        const resetLink = `${process.env.BASE_URL}/reset-password?token=${resetToken}`;
+        // Generate reset link, watch the link dont misslink
+        const resetLink = `${process.env.BASE_WEB_URL}/reset-password?token=${resetToken}`;
 
         // Load template email
         const templatePath = path.join(__dirname, "../templates/", "forgot-password.hbs");

@@ -73,6 +73,8 @@ import ErrorMiddleware from "./middlewares/error.middleware";
 import { PORT as port, BASE_WEB_URL } from "./config";
 import cors from "cors";
 
+import propertyRoutes from '@/routers/property.routes'
+
 const PORT = Number(port) || 8000;
 
 const app: Application = express();
@@ -89,6 +91,7 @@ app.use(
 app.use(express.json());
 
 app.use('/auth', authRoutes);  
+app.use('/property', propertyRoutes);
 
 app.use(ErrorMiddleware);
 
