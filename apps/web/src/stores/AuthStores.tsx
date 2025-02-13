@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { deleteCookie } from "cookies-next";
 
 export interface IUser {
-    id: number;
+    id: number;  //hapus
     name: string;
     email: string;
     role: string;

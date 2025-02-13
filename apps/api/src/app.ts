@@ -74,6 +74,8 @@ import { PORT as port, BASE_WEB_URL } from "./config";
 import cors from "cors";
 
 import propertyRoutes from '@/routers/property.routes'
+import filterRoutes from "@/routers/search.routes";
+import bookRoutes from '@/routers/book.routes';
 
 const PORT = Number(port) || 8000;
 
@@ -92,6 +94,8 @@ app.use(express.json());
 
 app.use('/auth', authRoutes);  
 app.use('/property', propertyRoutes);
+app.use('/api', filterRoutes);
+app.use('/booking', bookRoutes);
 
 app.use(ErrorMiddleware);
 

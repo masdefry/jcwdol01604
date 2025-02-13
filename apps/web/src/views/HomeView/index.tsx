@@ -1,11 +1,13 @@
 "use client";
+import Footer from '@/components/Footer';
 import PropertyCard from '@/components/Properties/PropertyCard';
 import ClientCompopnent from '@/layouts/ClientComponent';
 import Container from '@/layouts/Container';
 import axiosInstance from '@/lib/AxiosInstance';
+import Carousel from '@/utils/Carousel';
 import Empty from '@/utils/EmptyHandler';
 import { useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 import { useEffect, useState } from 'react';
 
@@ -23,12 +25,20 @@ interface Property {
 export default function HomeViews() {
     //emptyhandler
     // const isEmpty = true;
+    const router = useRouter();
 
     const searchParams = useSearchParams();
     const category = searchParams.get("category"); // Ambil kategori dari URL
 
     const [properties, setProperties] = useState<Property[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+
+    // Contoh array banner, pastikan gambar-gambar tersebut ada di folder public/images
+    const bannerImages = [
+        '/Banner1.avif',
+        '/Banner2.avif',
+        '/Banner3.avif',
+    ];
 
     useEffect(() => {
         const fetchProperties = async () => {
@@ -40,6 +50,7 @@ export default function HomeViews() {
                 }
                 const response = await axiosInstance.get(url);
                 setProperties(response.data);
+                console.log(response.data)
             } catch (error) {
                 console.error("Error fetching properties:", error);
             } finally {
@@ -49,6 +60,7 @@ export default function HomeViews() {
 
         fetchProperties();
     }, [category]); // Fetch ulang saat kategori berubah
+    console.log(properties);
 
     const isEmpty = !loading && properties.length === 0;
 
@@ -64,6 +76,8 @@ export default function HomeViews() {
     return (
         <ClientCompopnent>
             <Container>
+                {/* Tampilkan Carousel di bagian atas */}
+                <Carousel banners={bannerImages} />
 
                 {loading ? (
                     <p className="text-center text-lg font-semibold py-8">Loading...</p>
@@ -71,10 +85,10 @@ export default function HomeViews() {
 
                     <div
                         className="
-              pt-24
-              grid
-              grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6
-              gap-6
+                    pt-24
+                    grid
+                    grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6
+                    gap-6
             "
                         >
                             {properties.map((property) => (
@@ -90,7 +104,7 @@ export default function HomeViews() {
                             ))}
                         </div>
                 )}
-
+                {/* <Footer /> */}
             </Container>
         </ClientCompopnent>
     )

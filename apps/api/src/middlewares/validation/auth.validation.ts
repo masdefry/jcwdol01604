@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { body, validationResult } from "express-validator";
 
+//tambah method sanitize
 export const RegisterValidation = [
     body("email")
         .notEmpty()

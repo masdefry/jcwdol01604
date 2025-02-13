@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 
-import { Footer } from '@/components/Footer';
 import Modal from '@/components/Modals/Modal';
 import RegisterModal from '@/components/Modals/RegisterModal';
 
@@ -33,7 +32,7 @@ export default function RootLayout({
           <div className='pb-20 pt-40'>
             {children}
           </div>
-          <Footer />
+
         </ClientCompopnent>
       </body>
     </html>

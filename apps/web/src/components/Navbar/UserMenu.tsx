@@ -29,7 +29,7 @@ const UserMenu = () => {
         // }
         rentModal.onOpen();
     }, [rentModal]);
-    console.log(onRent)
+    // console.log(onRent)
 
     return (
         <div className='relative'>

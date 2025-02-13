@@ -1,5 +1,8 @@
 "use client";
+import useAuthStore from "@/stores/AuthStores";
+import HeartButton from "@/utils/HeartButton";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { FaStar } from "react-icons/fa";
 
 interface PropertyCardProps {
@@ -14,6 +17,7 @@ interface PropertyCardProps {
 }
 
 const PropertyCard: React.FC<PropertyCardProps> = ({
+    id,
     name,
     location,
     price,
@@ -21,8 +25,13 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
     imageUrl,
     availableDates,
 }) => {
+    const router = useRouter();
+    const { user, clearAuth } = useAuthStore(); //zustand
+
     return (
-        <div className="bg-white shadow-md rounded-lg overflow-hidden transition hover:scale-105">
+        <div
+            onClick={() => router.push(`/property/${id}`)}
+            className="bg-white shadow-md rounded-lg overflow-hidden transition hover:scale-105">
             {/* Gambar Properti */}
             <div className="relative w-full h-60">
                 <Image
@@ -31,6 +40,12 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
                     layout="fill"
                     objectFit="cover"
                     className="rounded-t-lg"
+                />
+            </div>
+            <div>
+                <HeartButton
+                    listingId={"1"}
+                    currentUser={user}
                 />
             </div>
 

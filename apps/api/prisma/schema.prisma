@@ -54,6 +54,7 @@ model Property {
   categoryId  Int
   description String?
   location    String?
+  region      String?   // Tambahkan ininpx 
   basePrice   Float
   isDeleted   Boolean   @default(false)
   deletedAt   DateTime?

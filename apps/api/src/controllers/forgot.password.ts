@@ -17,11 +17,11 @@ export const forgotPassword = async (req: Request, res: Response) => {
             return res.status(400).json({ message: "Email tidak ditemukan" });
         }
 
-        // Generate token dan expiry 1 jam
-        const resetToken = crypto.randomBytes(32).toString("hex");
-        const expiresAt = new Date(Date.now() + 3600000); // 1 jam dari sekarang
 
-        // Simpan token ke database
+        const resetToken = crypto.randomBytes(32).toString("hex");
+        const expiresAt = new Date(Date.now() + 3600000);
+
+
         await prisma.user.update({
             where: { email },
             data: {
@@ -30,10 +30,10 @@ export const forgotPassword = async (req: Request, res: Response) => {
             },
         });
 
-        // Generate reset link, watch the link dont misslink
+
         const resetLink = `${process.env.BASE_WEB_URL}/reset-password?token=${resetToken}`;
 
-        // Load template email
+
         const templatePath = path.join(__dirname, "../templates/", "forgot-password.hbs");
         const templateSource = fs.readFileSync(templatePath, "utf-8");
         const compiledTemplate = Handlebars.compile(templateSource);
