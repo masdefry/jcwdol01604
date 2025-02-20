@@ -48,14 +48,16 @@ model User {
 
 // Model Property
 model Property {
-  id          Int       @id @default(autoincrement())
+  id          Int       @id @default(autoincrement()) //no auto increment uuid / cuid
   tenantId    Int
-  name        String
+  name        String     //tambah unique
+  slug        String?    @unique
   categoryId  Int
   description String?
   location    String?
   region      String?   // Tambahkan ininpx 
   basePrice   Float
+   imageUrl    String?   // <-- Field baru untuk URL gambar
   isDeleted   Boolean   @default(false)
   deletedAt   DateTime?
   createdAt   DateTime  @default(now())

@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import prisma from '@/prisma';
@@ -7,6 +7,7 @@ import Handlebars from 'handlebars';
 import fs from 'fs'; // File system
 import { transporter } from '../lib/mail';
 import crypto from 'crypto'
+import { User } from '@/custom';
 
 export const registerUser = async (req: Request, res: Response) => {
     const templatePath = path.join(__dirname, "../templates/", "register.hbs");
@@ -125,3 +126,29 @@ export const loginUser = async (req: Request, res: Response) => {
         });
     }
 };
+
+export async function UpdateProfilePicture(req: Request, res: Response, next: NextFunction) {
+    try {
+        const { email } = req.user as User;
+        const { file } = req;
+
+        if (!file) {
+            throw new Error("No file uploaded");
+        }
+
+        await prisma.user.update({
+            where: {
+                email,
+            },
+            data: {
+                profilePicture: file?.filename,
+            },
+        });
+
+        res.status(200).send({
+            message: "Success",
+        });
+    } catch (err) {
+        next(err);
+    }
+}

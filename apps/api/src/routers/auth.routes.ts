@@ -14,12 +14,15 @@
 // }
 
 import express from 'express';
-import { loginUser, registerUser } from '../controllers/auth.controller';
+import { loginUser, registerUser, UpdateProfilePicture } from '../controllers/auth.controller';
 import { LoginValidation, RegisterValidation } from '@/middlewares/validation/auth.validation';
 
 import prisma from '@/prisma';
 import { verifyEmail } from '@/controllers/verify.email';
 import { forgotPassword, resetPassword } from '@/controllers/forgot.password';
+import { VerifyToken } from '@/middlewares/log.niddleware';
+import { SingleUploader } from '@/utils/uploader';
+// import { updateRoleToOrganizer } from '@/controllers/updateRole';
 
 const router = express.Router();
 
@@ -30,6 +33,13 @@ router.get('/verify-email', verifyEmail);
 router.post('/forgot-password', forgotPassword);
 router.post('/reset-password', resetPassword);
 
+// router.post('/update-role', updateRoleToOrganizer); 
 
+router.patch(
+    "/avatar",
+    VerifyToken,
+    SingleUploader("AVT", "/avatar"),
+    UpdateProfilePicture
+);
 
 export default router;

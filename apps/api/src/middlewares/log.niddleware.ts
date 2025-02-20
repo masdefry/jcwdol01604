@@ -3,7 +3,7 @@ import { SECRET_KEY } from "../config";
 import { User } from "../custom";
 import { verify } from "jsonwebtoken";
 
-async function VerifyToken2(req: Request, res: Response, next: NextFunction) {
+async function VerifyToken(req: Request, res: Response, next: NextFunction) {
     try {
         const token = req.header("Authorization")?.replace("Bearer ", "");
 
@@ -58,4 +58,4 @@ async function AdminGuard(req: Request, res: Response, next: NextFunction) {
     }
 }
 
-export { VerifyToken2, AdminGuard };
+export { VerifyToken, AdminGuard };

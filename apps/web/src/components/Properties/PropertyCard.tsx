@@ -14,6 +14,7 @@ interface PropertyCardProps {
     rating: number;
     imageUrl: string;
     availableDates?: string;
+    slug: string;     // Tambahkan slug
 }
 
 const PropertyCard: React.FC<PropertyCardProps> = ({
@@ -24,13 +25,14 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
     rating,
     imageUrl,
     availableDates,
+    slug //tambah field slug 
 }) => {
     const router = useRouter();
     const { user, clearAuth } = useAuthStore(); //zustand
 
     return (
         <div
-            onClick={() => router.push(`/property/${id}`)}
+            onClick={() => router.push(`/property/${slug}`)} 
             className="bg-white shadow-md rounded-lg overflow-hidden transition hover:scale-105">
             {/* Gambar Properti */}
             <div className="relative w-full h-60">

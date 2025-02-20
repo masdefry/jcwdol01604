@@ -36,7 +36,7 @@ const UserMenu = () => {
             <div className='flex flex-row items-center gap-3'>
 
                 <div
-                    onClick={onRent}
+                    onClick={() => router.push('/create')}
                     className='
                 hidden
                 md:block
@@ -50,7 +50,7 @@ const UserMenu = () => {
                 cursor-pointer
                 '
                 >
-                    Jadi Tenant
+                    Peluang Propertymu
                 </div>
 
                 <div

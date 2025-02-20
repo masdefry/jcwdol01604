@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import prisma from "@/prisma";
 import { Prisma } from "@prisma/client";
+import { getProperties } from "@/services/property.service";
+
 
 export const searchProperties = async (req: Request, res: Response) => {
     try {
@@ -61,3 +63,48 @@ export const searchProperties = async (req: Request, res: Response) => {
         res.status(500).json({ message: "Terjadi kesalahan saat mencari properti" });
     }
 };
+
+
+
+
+export async function getPropertiesFilter(req: Request, res: Response) {
+    try {
+        // Ambil query params
+        const {
+            page = '1',
+            pageSize = '10',
+            name = '',
+            categoryId = '',
+            sort = '',
+            minPrice = '',
+            maxPrice = '',
+        } = req.query;
+
+        // Convert to integer
+        const pageNum = parseInt(page as string, 10) || 1;
+        const pageSizeNum = parseInt(pageSize as string, 10) || 10;
+
+        // Panggil service
+        const { totalItems, properties } = await getProperties({
+            page: pageNum,
+            pageSize: pageSizeNum,
+            name: name as string,
+            categoryId: categoryId as string,
+            sort: sort as string,
+            minPrice: minPrice as string,
+            maxPrice: maxPrice as string,
+        });
+
+        // Kirimkan hasil ke klien (bersama info paging)
+        return res.json({
+            currentPage: pageNum,
+            pageSize: pageSizeNum,
+            totalItems,
+            totalPages: Math.ceil(totalItems / pageSizeNum),
+            data: properties,
+        });
+    } catch (error) {
+        console.error('Error fetching properties:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+}

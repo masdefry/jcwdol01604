@@ -83,3 +83,72 @@ export const getPropertyDetails = async (req: Request, res: Response) => {
         res.status(500).json({ message: "Terjadi kesalahan saat mengambil detail properti" });
     }
 };
+
+export const getPropertyDetailsBySlug = async (req: Request, res: Response) => {
+    try {
+        const { slug } = req.params;
+
+        if (!slug) {
+            return res.status(400).json({ message: "Slug diperlukan" });
+        }
+
+        // Cari property berdasarkan slug
+        const property = await prisma.property.findUnique({
+            where: { slug },
+            include: {
+                category: true,
+                tenant: {
+                    select: { id: true, name: true, email: true },
+                },
+                rooms: {
+                    include: {
+                        availability: true,
+                        peakSeasonRates: true,
+                    },
+                },
+                reviews: {
+                    include: {
+                        user: {
+                            select: { name: true, profilePicture: true },
+                        },
+                    },
+                },
+            },
+        });
+
+        if (!property) {
+            return res.status(404).json({ message: "Properti tidak ditemukan" });
+        }
+
+        // Hitung rata-rata rating
+        const averageRating = property.reviews.length > 0
+            ? property.reviews.reduce((acc, r) => acc + r.rating, 0) / property.reviews.length
+            : null;
+
+        // Format response
+        return res.json({
+            id: property.id,
+            name: property.name,
+            slug: property.slug,
+            description: property.description,
+            location: `${property.location}, ${property.region}`,
+            basePrice: property.basePrice,
+            category: property.category?.name,
+            tenant: property.tenant,
+            rooms: property.rooms.map(room => ({
+                id: room.id,
+                name: room.name,
+                // ...
+            })),
+            reviews: property.reviews.map(review => ({
+                id: review.id,
+                user: review.user.name,
+                // ...
+            })),
+            averageRating,
+        });
+    } catch (error: any) {
+        console.error("Error fetching property details by slug:", error);
+        res.status(500).json({ message: "Terjadi kesalahan saat mengambil detail properti" });
+    }
+};

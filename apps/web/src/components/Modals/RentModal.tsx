@@ -6,6 +6,9 @@ import Heading from '@/utils/Heading';
 import { categories } from '@/components/CategoryBox/Categories';
 import CategoryInput from '../utility/CategoryInput';
 import { FieldValues, useForm } from 'react-hook-form';
+// import CountrySelect from '@/utils/Inputs/CountrySelect';
+// import Map from '@/utils/Map';
+// import Map2 from '@/utils/Map2';
 
 enum STEPS {
     CATEGORY = 0,
@@ -46,6 +49,8 @@ const RentModal = () => {
     });
 
     const category = watch('category');
+    const location = watch('location')
+
     const setCustomValue = (id: string, value: any) => {
         setValue(id, value, {
             shouldDirty: true,
@@ -106,6 +111,15 @@ const RentModal = () => {
                         />
                     </div>
                 ))}
+
+
+                {/* <CountrySelect
+                    onChange={(value) => setCustomValue('location', value)}
+                    value={location}
+                />
+
+                <Map2 /> */}
+
             </div>
 
         </div>

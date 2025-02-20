@@ -10,6 +10,7 @@ import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 
 import { useEffect, useState } from 'react';
+import SearchResult from '../SearchResultView';
 
 interface Property {
     id: number;
@@ -19,6 +20,7 @@ interface Property {
     rating: number;
     imageUrl: string;
     reviews?: { rating: number }[]; // Bisa kosong jika tidak ada review
+    slug: string;
 }
 
 
@@ -28,7 +30,23 @@ export default function HomeViews() {
     const router = useRouter();
 
     const searchParams = useSearchParams();
-    const category = searchParams.get("category"); // Ambil kategori dari URL
+
+    const nameParam = searchParams.get("name");
+    const locationParam = searchParams.get("location");
+    const startDateParam = searchParams.get("startDate");
+    const endDateParam = searchParams.get("endDate");
+    const categoryIdParam = searchParams.get("categoryId");
+    const sortParam = searchParams.get("sort");
+    const category = searchParams.get("category");
+
+    const isSearching = (
+        nameParam ||
+        locationParam ||
+        startDateParam ||
+        endDateParam ||
+        categoryIdParam ||
+        sortParam
+    );
 
     const [properties, setProperties] = useState<Property[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
@@ -40,17 +58,43 @@ export default function HomeViews() {
         '/Banner3.avif',
     ];
 
+    // useEffect(() => {
+    //     const fetchProperties = async () => {
+    //         try {
+    //             setLoading(true);
+    //             let url = "/property/properties"; // Default: ambil semua properti
+    //             if (category) {
+    //                 url = `/property/properties/category?category=${category}`; // Fetch berdasarkan kategori jika ada
+    //             }
+    //             const response = await axiosInstance.get(url);
+    //             setProperties(response.data);
+    //             console.log(response.data)
+    //         } catch (error) {
+    //             console.error("Error fetching properties:", error);
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     };
+
+    //     fetchProperties();
+    // }, [category]); // Fetch ulang saat kategori berubah
     useEffect(() => {
+        if (isSearching) {
+            // Kalau lagi search, skip fetch default
+            setLoading(false);
+            return;
+        }
+
+        // Fetch default (jika TIDAK search)
         const fetchProperties = async () => {
             try {
                 setLoading(true);
-                let url = "/property/properties"; // Default: ambil semua properti
+                let url = "/property/properties";
                 if (category) {
-                    url = `/property/properties/category?category=${category}`; // Fetch berdasarkan kategori jika ada
+                    url = `/property/properties/category?category=${category}`;
                 }
                 const response = await axiosInstance.get(url);
                 setProperties(response.data);
-                console.log(response.data)
             } catch (error) {
                 console.error("Error fetching properties:", error);
             } finally {
@@ -59,10 +103,18 @@ export default function HomeViews() {
         };
 
         fetchProperties();
-    }, [category]); // Fetch ulang saat kategori berubah
+    }, [isSearching, category]);
     console.log(properties);
 
     const isEmpty = !loading && properties.length === 0;
+
+    if (loading) {
+        return (
+            <ClientCompopnent>
+                <p className="text-center text-lg font-semibold py-8">Loading...</p>
+            </ClientCompopnent>
+        );
+    }
 
 
     if (isEmpty) {
@@ -79,30 +131,33 @@ export default function HomeViews() {
                 {/* Tampilkan Carousel di bagian atas */}
                 <Carousel banners={bannerImages} />
 
-                {loading ? (
-                    <p className="text-center text-lg font-semibold py-8">Loading...</p>
+                {isSearching ? (
+                    // Render komponen SearchResult
+                    <SearchResult />
                 ) : (
-
+                    // Tampilkan listing default
                     <div
                         className="
-                    pt-24
-                    grid
-                    grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6
-                    gap-6
+              pt-24
+              grid
+              grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 
+              xl:grid-cols-5 2xl:grid-cols-6
+              gap-6
             "
-                        >
-                            {properties.map((property) => (
-                                <PropertyCard
-                                    key={property.id}
-                                    id={property.id}
-                                    name={property.name}
-                                    location={property.location}
-                                    price={property.basePrice}
-                                    rating={property.rating}
-                                    imageUrl={property.imageUrl || "/default.avif"}
-                                />
-                            ))}
-                        </div>
+                    >
+                        {properties.map((property) => (
+                            <PropertyCard
+                                key={property.id}
+                                id={property.id}
+                                name={property.name}
+                                location={property.location}
+                                price={property.basePrice}
+                                rating={property.rating}
+                                imageUrl={property.imageUrl || "/default.avif"}
+                                slug={property.slug}
+                            />
+                        ))}
+                    </div>
                 )}
                 {/* <Footer /> */}
             </Container>

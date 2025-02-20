@@ -77,6 +77,7 @@ import propertyRoutes from '@/routers/property.routes'
 import filterRoutes from "@/routers/search.routes";
 import bookRoutes from '@/routers/book.routes';
 
+
 const PORT = Number(port) || 8000;
 
 const app: Application = express();

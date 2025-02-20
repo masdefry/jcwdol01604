@@ -3,6 +3,8 @@ import Logo from "@/utils/Logo";
 import Categories from "@/components/CategoryBox/Categories";
 import Search from "@/utils/Search";
 import UserMenu from "./UserMenu";
+import SearchForm from "@/utils/SearchForm";
+import SearchBar from "@/utils/SearchBar";
 
 export const Navbar = () => {
     return <div>
@@ -14,7 +16,8 @@ export const Navbar = () => {
                     <div className="flex flex-row justify-between gap-3 md:gap-0">
 
                         <Logo />
-                        <Search />
+                        {/* <SearchForm /> */}
+                        <SearchBar />
                         <UserMenu />
 
                     </div>
